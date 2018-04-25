@@ -473,11 +473,29 @@ h3 {
 }
 
 @media (max-width:768px) {
+
+    .Title-top{
+        
+        top: 40%;
+        font-size: 40px;
+        
+    }
+    
     .Scene-sky {
         background-size: 100% 97%;
         background-repeat: repeat-x;
         background-color: #ffeddb
     }
+
+    .under-construction{
+        position: relative;
+        left: 0px;
+        right: 0px;
+        width: 100%;
+        margin: 0%;
+        padding: 0%;
+    }
+    
     .Nav-link {
         font-size: 16px;
         margin: 0;
@@ -544,37 +562,7 @@ h3 {
         font-size: 18px;
         margin: 10px 0 25px 0
     }
-    .Work:nth-child(n) {
-        position: relative;
-        padding-top: 340px;
-        margin-bottom: 100px;
-        padding-top: 260px;
-        margin-bottom: 60px;
-    }
-    .Work:nth-child(n):last-child {
-        margin-bottom: 20px
-    }
-    .Work:nth-child(n) .Work-text,
-    .Work:nth-child(n) .Work-image {
-        display: block;
-        margin: 0;
-        left: auto;
-        right: auto;
-        padding: 0
-    }
-    .Work:nth-child(n) .Work-text {
-        width: 100%;
-        text-align: center;
-        font-size: 16px
-    }
-    .Work:nth-child(n) .Work-image {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 300px;
-        margin-left: -156px;
-        height: 225px
-    }
+ 
     .Social-link {
         font-size: 18px
     }
