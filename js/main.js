@@ -507,7 +507,7 @@
             c = e();
           s + b.innerHeight > c && (s = c - b.innerHeight),
             b.scrollTo(0, s),
-            (i.style.transform = "translate3d(200," + s + "px,50)");
+            (i.style.transform = "translate3d(0," + s + "px,0)");
           var f = 300 + 0.3 * s,
             h = 0,
             d = s,
