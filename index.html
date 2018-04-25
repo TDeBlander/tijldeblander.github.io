@@ -1,0 +1,161 @@
+<html>
+
+<head>
+  <title>Tijl De Blander</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css?0002" />
+</head>
+
+<body>
+  <div class="ScrollWrapper">
+    <header class="Header js-HasVH" data-vh="0.75">
+      <nav>
+        <a class="Nav-link" href="#about">
+          <span>About</span>
+        </a>
+        <a class="Nav-link" href="#work">
+          <span>Work</span>
+        </a>
+        <a class="Nav-link" href="#contact">
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="Scene">
+        <div class="Scene-sky" role="presentation"></div>
+        <canvas class="Scene-stars" role="presentation"></canvas>
+        <canvas class="Scene-mountains" data-stop-on-scroll="true" role="presentation"></canvas>
+      </div>
+
+      <div class="Title-top">Tijl De</div>
+      <div class="Title">Blander</div>
+      <div class="Title-Seperator">
+        <img src="img/separator-green.svg" alt="">
+      </div>
+</header>
+</div>
+
+      <main>
+        <div class="container">
+          <section>
+            <h2 id="about">About</h2>
+            <p class="heading">Hey my name is Tijl, I'm 19 years old and studying applied computer science at HoGent. I'm passionate about creating, problem solving and
+              math so when I started programming it was love at first sight!
+            </p>
+            <p>Have experience with: Java, Html5, css3, canvas, ajax, Json, mysql, sass, scss, jquery and javascript.</p>
+            <p>When I'm not programming I spend a lot of my free time squashing, going for runs or watching over cubs at 
+              <a href='http://scoutsdenderleeuw.be'>Scouts Denderleeuw</a>(Site is being updated this year :p).</p>
+          </section>
+           <section>
+            <h2 id="work">Work</h2>
+         
+                <p id=work>With finals coming up I kind of have my hands full with school projects, so I don't really have the time to finish those that i've been working on
+                    . But after finals I'll have time enough so be sure to check it out later this year!
+                  </p>
+                  <p class="work"> <img src="img/under-construction.gif" alt="under-construction gif" height="300px" class="under-construction"></p>
+             
+            <p class="text-center">Under construction</p>
+          </section>
+          <footer>
+            <h2 id="contact">Contact</h2>
+            <div class="text-center">
+              <div class="Contact-heading">You can drop me a line at</div>
+              <a class="email Footer-link">
+                <strong>tijldeblaner</strong> at
+                <strong>gmail</strong> dot com</a>
+              <div class="Contact-heading">You can find me on</div>
+              <div class="Social">
+                <a class="Footer-link Social-link" href="http://github.com/tijldeblander">
+                  <strong>github</strong>.com/
+                  <strong>tijldeblander</strong>
+                </a>
+                <br/>
+
+                </a>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </main>
+
+
+
+      <div class="Scene--bottom">
+        <canvas class="Scene-mountains Scene-mountains--bottom"></canvas>
+      </div>
+  </div>
+  <script id="vs" type="x-shader/vertex">attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}
+</script>
+  <script id="fs" type="x-shader/fragment">uniform float t;
+uniform float s;
+uniform float sunSize;
+uniform vec2 r;
+uniform sampler2D i;
+
+float power(float value,float p){
+  float f=floor(value);
+  float r=value-f;
+  if(r>0.5){
+    r=(r*2.0)-1.0;
+    r=pow(r,1.0/p);
+    r=(r/2.0)+0.5;
+  }else{
+    r*=2.0;
+    r=pow(r,p);
+    r/=2.0;
+  }
+  return r+f;
+}
+vec3 getDisplacement(float dist){
+  float global=(dist*6.0)-t*0.9;
+  float distortion=(sin(global*2.0-(t*0.5))+1.0)*0.55;
+  float distorted=global-(distortion*0.45);
+  float local=distorted-floor(distorted);
+  float stripedDistance=mod(local*4.0,1.0);
+  float striped=(power(local*4.0,12.0)+-0.4)/4.0;
+  return vec3(striped,stripedDistance,local);
+}
+void main(){
+  vec2 pos=gl_FragCoord.xy/r;
+  pos.y-=0.5/r.y;
+  pos=vec2(pos.x,1.0-pos.y);
+  if(pos.y>0.5){
+    float dist=(pos.y-0.5)/0.5;
+    vec3 displacement=getDisplacement(dist);
+    float w=displacement.x;
+    pos.y+=w*0.35*dist*s;
+  }else{
+    float sunDistance=(sunSize/r.x)*0.75;
+    float falloff=2.5;
+    falloff=1.0+falloff;
+    float p=1.0-(abs(pos.x-0.5)/(sunDistance*falloff));
+    if(p>0.0){
+      float cutoff=1.0-(1.0/falloff);
+      if(p>cutoff){
+        p=1.0;
+      }else{
+        p=(p/cutoff);
+        p=pow(p,2.0);
+        p*=0.2;
+      }
+      pos.x+=sin((t*7.0)+(pos.y*150.0))*(sunDistance*0.1)*p*s;
+    }
+  }
+  vec4 textureColor=texture2D(i,pos);
+  float a=textureColor.a;
+  if(a<1.0){
+    vec3 matte=vec3(1.0,0.92,0.85);
+    float a2=a*1.0;
+    float sunDistance=(sunSize/r.x)*0.85;
+    float p=1.0-(abs(pos.x-0.5)/sunDistance);
+    if(p>0.0){
+      a2=a*0.0;
+    }
+    textureColor=vec4((textureColor.rgb*a2)+(matte*(1.0-a2)),a);
+  }
+  gl_FragColor=vec4(textureColor.rgb*textureColor.a,textureColor.a);
+}</script>
+  <script src="js/main.js?0003"></script>
+</body>
+
+</html>
