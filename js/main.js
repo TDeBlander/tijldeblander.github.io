@@ -439,9 +439,7 @@
       });
     })();
   var F = a(".Work-video").map(function(t) {
-    function e() {
-        n.initialized || (t.play(), t.pause(), (n.initialized = !0));
-      }
+    
       var n = { video: t, bounds: null, initialized: !1, playing: !1 };
       return (
         j(n),
@@ -509,7 +507,7 @@
             c = e();
           s + b.innerHeight > c && (s = c - b.innerHeight),
             b.scrollTo(0, s),
-            (i.style.transform = "translate3d(0," + s + "px,0)");
+            (i.style.transform = "translate3d(200," + s + "px,50)");
           var f = 300 + 0.3 * s,
             h = 0,
             d = s,
