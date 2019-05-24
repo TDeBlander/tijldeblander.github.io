@@ -5,12 +5,15 @@
 
 
     let input = document.getElementById("input");
-console.log(input);
+
+    let inputd = document.getElementById("inputd");
 
 
 function fix(){
-    console.log(input.value.split(" "))
     document.getElementById("Encrypted").innerHTML = encrypt();
+}
+
+function unfix(){
     document.getElementById("Decrypted").innerHTML = dencrypt();
 }
 
@@ -20,8 +23,7 @@ function encrypt(){
 }
 
 function dencrypt(){
-    let a = input.value;
-
+    let a = inputd.value;
     return CryptoJS.AES.decrypt(a,"Tijl is litti smart").toString(CryptoJS.enc.Utf8);
 }
 
